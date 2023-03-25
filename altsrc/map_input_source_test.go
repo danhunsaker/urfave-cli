@@ -1,6 +1,7 @@
 package altsrc
 
 import (
+	"fmt"
 	"testing"
 	"time"
 )
@@ -128,4 +129,9 @@ func TestMapInputSource_Json(t *testing.T) {
 	d, err = inputSource.Json("test_slice")
 	expect(t, []byte(`["value",2,{"key1":"value","key2":2,"key3":[{"subkey1":["subvalue"]}],"key4":[[1,4,7],[2,5,8],[3,6,9]]}]`), d)
 	expect(t, nil, err)
+}
+
+func TestMapInputSource_IncorrectFlagTypeError(t *testing.T) {
+	var testVal *bool
+	expect(t, incorrectTypeForFlagError("test", "bool", testVal), fmt.Errorf("Mismatched type for flag 'test'. Expected 'bool' but actual is '*bool'"))
 }

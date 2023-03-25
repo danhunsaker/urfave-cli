@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"math"
-	"reflect"
 	"strings"
 	"time"
 
@@ -583,11 +582,5 @@ func sliceToJsonable(value []interface{}) ([]interface{}, error) {
 }
 
 func incorrectTypeForFlagError(name, expectedTypeName string, value interface{}) error {
-	valueType := reflect.TypeOf(value)
-	valueTypeName := ""
-	if valueType != nil {
-		valueTypeName = valueType.Name()
-	}
-
-	return fmt.Errorf("Mismatched type for flag '%s'. Expected '%s' but actual is '%s'", name, expectedTypeName, valueTypeName)
+	return fmt.Errorf("Mismatched type for flag '%s'. Expected '%s' but actual is '%T'", name, expectedTypeName, value)
 }
